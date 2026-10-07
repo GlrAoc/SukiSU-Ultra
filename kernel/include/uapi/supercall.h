@@ -12,8 +12,12 @@
 #define DECLARE(type, name, val) enum { name = val }
 #endif
 
-// 2: allowlist v4 root profile flag
-DECLARE(__u32, KERNEL_SU_UAPI_VERSION, 2);
+// PATCHED (2026-10-07): aligned to 5 to match official SukiSU-Ultra manager.
+// Manager side declares KERNEL_SU_UAPI_VERSION = 5, and
+// Natives.isFullFeatured() requires kernelUAPIVersion == managerUAPIVersion.
+// Returning 2 made isFullFeatured() always false, hiding the bottom nav bar
+// (home / settings / modules / superuser) and pinning the kernel-update banner.
+DECLARE(__u32, KERNEL_SU_UAPI_VERSION, 5);
 
 /* Magic numbers for reboot hook to install fd */
 DECLARE(__u32, KSU_INSTALL_MAGIC1, 0xDEADBEEF);
